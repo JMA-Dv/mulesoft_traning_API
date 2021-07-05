@@ -13,7 +13,6 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		<db:my-sql-connection host="mudb.learn.mulesoft.com" port="3306" user="mule" password="mule" database="training" />
 	</db:config>
 	<flow name="getFlights" doc:id="93b68f38-d79d-4d7f-bc04-5e37990e6e33" >
-		<http:listener doc:name="Listener" doc:id="c0eebf2d-daaa-48f3-8b22-e7a7014fbe72" config-ref="HTTP_Listener_config" path="/flights" allowedMethods="GET"/>
 		<db:select doc:name="Select" doc:id="545d82fc-a04a-4cc0-982e-9f6faf7b6b8d" config-ref="Database_Config">
 			<db:sql ><![CDATA[SELECT * FROM american]]></db:sql>
 		</db:select>
@@ -39,11 +38,9 @@ payload map ( payload01 , indexOfPayload01 ) -> {
 		</ee:transform>
 	</flow>
 	<flow name="postFlight" doc:id="37da607c-a458-495b-81ff-c332919cbfd3" >
-		<http:listener doc:name="Listener" doc:id="c44e6838-904c-4dab-bf8c-066f1c503a09" config-ref="HTTP_Listener_config" path="/flights" allowedMethods="POST"/>
 		<set-payload value='{"message": "Flight added (but not really)"}' doc:name="Set Payload" doc:id="b1b7c7f0-2a4f-46e1-a397-b4e6a745f3a1" />
 	</flow>
 	<flow name="getFlightsByID" doc:id="908fc73a-7945-4c83-a6eb-3667fc08cc1a" >
-		<http:listener doc:name="Copy_of_Listener" doc:id="347a9323-9f7d-4fff-a1fa-bdb9843b10d1" config-ref="HTTP_Listener_config" path="/flights/{ID}" allowedMethods="GET" />
 		<db:select doc:name="Copy_of_Select" doc:id="379d79d3-b613-4398-8a57-20e623df7028" config-ref="Database_Config" >
 			<db:sql ><![CDATA[SELECT * FROM american WHERE ID = :ID]]></db:sql>
 			<db:input-parameters ><![CDATA[#[{'ID' : attributes.uriParams.ID}]]]></db:input-parameters>
